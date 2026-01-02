@@ -84,10 +84,12 @@ class ClaudeCodeService {
     private suspend fun readOutput() {
         try {
             val buffer = StringBuilder()
-            var char: Int
 
-            while (processReader?.read()?.also { char = it } != -1) {
-                val c = char.toChar()
+            while (true) {
+                val charInt = processReader?.read() ?: break
+                if (charInt == -1) break
+
+                val c = charInt.toChar()
 
                 if (c == '\n') {
                     val line = buffer.toString()
